@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250430065937 extends AbstractMigration
+final class Version20250430080549 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,13 +24,19 @@ final class Version20250430065937 extends AbstractMigration
             CREATE TABLE race (id SERIAL NOT NULL, name VARCHAR(100) NOT NULL, date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, location VARCHAR(255) NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE result (id SERIAL NOT NULL, race_id INT DEFAULT NULL, runner_id INT DEFAULT NULL, time TIME(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))
+            COMMENT ON COLUMN race.date IS '(DC2Type:datetime_immutable)'
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE TABLE result (id SERIAL NOT NULL, race_id INT DEFAULT NULL, runner_id INT DEFAULT NULL, time TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_136AC1136E59D40D ON result (race_id)
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_136AC1133C7FB593 ON result (runner_id)
+        SQL);
+        $this->addSql(<<<'SQL'
+            COMMENT ON COLUMN result.time IS '(DC2Type:datetime_immutable)'
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE runner (id SERIAL NOT NULL, name VARCHAR(100) NOT NULL, surname VARCHAR(100) NOT NULL, start_number INT NOT NULL, PRIMARY KEY(id))

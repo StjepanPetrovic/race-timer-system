@@ -20,7 +20,7 @@ class Result
     #[ORM\ManyToOne(targetEntity: Runner::class)]
     private Runner $runner;
 
-    #[ORM\Column(type: "time")]
+    #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $time;
 
     public function getId(): int

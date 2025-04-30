@@ -19,7 +19,7 @@ class Race
     #[ORM\Column(length: 100)]
     private string $name;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $date;
 
     #[ORM\Column(length: 255)]
