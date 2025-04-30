@@ -7,7 +7,7 @@ import (
 )
 
 // Base URL of the Symfony API
-const baseURL = "http://127.0.0.1:8000"
+const baseURL = "https://127.0.0.1:8000/api"
 
 // GetRunner fetches details of a runner from the Symfony API
 func GetRunner(runnerID int) (*Runner, error) {
