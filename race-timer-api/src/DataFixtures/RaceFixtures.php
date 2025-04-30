@@ -9,6 +9,15 @@ use Doctrine\Persistence\ObjectManager;
 
 class RaceFixtures extends Fixture
 {
+    /**
+     * Loads a set of predefined race and runner data into the database.
+     *
+     * This method creates a specified number of Race entities and generates a
+     * predefined number of Runner entities for each race. Each entity is persisted
+     * into the database and subsequently flushed to ensure the data is saved.
+     *
+     * @param ObjectManager $manager The object manager responsible for persisting entities.
+     */
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 3; $i++) {
