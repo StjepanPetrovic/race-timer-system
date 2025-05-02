@@ -29,11 +29,11 @@ class RaceFixtures extends Fixture
             $manager->persist($race);
 
             // Create some runners for each race.
-            for ($j = 1; $j <= 5; $j++) {
+            for ($j = 1; $j <= 20; $j++) {
                 $runner = new Runner();
                 $runner->setName("Runner $j");
                 $runner->setSurname("Surname $j");
-                $runner->setStartNumber($i * 10 + $j);
+                $runner->setStartNumber($i * 100 + $j);
 
                 $manager->persist($runner);
             }

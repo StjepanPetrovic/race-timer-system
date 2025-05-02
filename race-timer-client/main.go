@@ -21,7 +21,7 @@ func main() {
      startNumbers := []int{101, 102, 103, 104, 105, 106, 107, 108, 109, 110}
 
      // Random interval between runners (between 2 and 5 seconds)
-     interval := 3 * time.Second
+     interval := 2 * time.Second
 
      // Create and start the simulator
      sim := simulator.NewFinishLineSimulator(raceID, startNumbers, interval)
