@@ -19,7 +19,7 @@ type ResultRequest struct {
 const baseURL = "https://127.0.0.1:8000/api"
 
 // SendRunnerResult sends a runner's finish time to the API
-func SendRunnerResult(raceId, startNumber int, finishTime time.Time) error {
+func SendRunnerResult(startNumber int, raceId int, finishTime time.Time) error {
     result := ResultRequest{
         StartNumber: startNumber,
         RaceId:   raceId,
