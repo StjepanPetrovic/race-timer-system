@@ -1,20 +1,29 @@
 package main
 
 import (
-	"fmt"
-	"racing-timer-client/api"
+    "fmt"
+    "math/rand"
+    "racing-timer-client/simulator"
+    "time"
 )
 
+
 func main() {
-	fmt.Println("Racing Timer Client started.")
+     // Set random seed
+     rand.Seed(time.Now().UnixNano())
 
-	// Example: Call a function from your API client
-	runnerID := 1
-	runner, err := api.GetRunner(runnerID)
-	if err != nil {
-		fmt.Printf("Error fetching runner: %v\n", err)
-		return
-	}
+     fmt.Println("Racing Timer Client - Finish Line Simulator")
 
-	fmt.Printf("Runner details: %+v\n", runner)
-}
+     // Configuration
+     raceID := 1 // Set your race ID
+     runnerCount := 10 // Number of runners in the race
+
+     // Random interval between runners (between 2 and 5 seconds)
+     minInterval := 2 * time.Second
+     maxInterval := 5 * time.Second
+     averageInterval := (maxInterval - minInterval) / 2 + minInterval
+
+     // Create and start the simulator
+     sim := simulator.NewFinishLineSimulator(raceID, runnerCount, averageInterval)
+     sim.Start()
+ }
