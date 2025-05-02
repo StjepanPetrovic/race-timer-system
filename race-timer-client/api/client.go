@@ -8,14 +8,20 @@ import (
     "time"
 )
 
+// Runner struct represents a runner in the racing application
+type ResultRequest struct {
+    StartNumber int       `json:"start_number"`  // Changed from RunnerId to StartNumber
+    RaceId      int       `json:"race_id"`
+    Time        time.Time `json:"time"`
+}
 
 // Base URL of the Symfony API
 const baseURL = "https://127.0.0.1:8000/api"
 
 // SendRunnerResult sends a runner's finish time to the API
-func SendRunnerResult(raceId, runnerId int, finishTime time.Time) error {
+func SendRunnerResult(raceId, startNumber int, finishTime time.Time) error {
     result := ResultRequest{
-        RunnerId: runnerId,
+        StartNumber: startNumber,
         RaceId:   raceId,
         Time:     finishTime,
     }
@@ -25,7 +31,7 @@ func SendRunnerResult(raceId, runnerId int, finishTime time.Time) error {
         return fmt.Errorf("error marshaling result: %v", err)
     }
 
-    url := fmt.Sprintf("%s/results", baseURL)
+    url := fmt.Sprintf("%s/finish-line", baseURL)
     req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return fmt.Errorf("error creating request: %v", err)

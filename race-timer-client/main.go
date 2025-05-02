@@ -15,15 +15,15 @@ func main() {
      fmt.Println("Racing Timer Client - Finish Line Simulator")
 
      // Configuration
-     raceID := 1 // Set your race ID
-     runnerCount := 10 // Number of runners in the race
+     raceID := 6 // Set your race ID
+
+     // Define start numbers for the race
+     startNumbers := []int{101, 102, 103, 104, 105, 106, 107, 108, 109, 110}
 
      // Random interval between runners (between 2 and 5 seconds)
-     minInterval := 2 * time.Second
-     maxInterval := 5 * time.Second
-     averageInterval := (maxInterval - minInterval) / 2 + minInterval
+     interval := 3 * time.Second
 
      // Create and start the simulator
-     sim := simulator.NewFinishLineSimulator(raceID, runnerCount, averageInterval)
+     sim := simulator.NewFinishLineSimulator(raceID, startNumbers, interval)
      sim.Start()
  }
