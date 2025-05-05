@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\DTO\FinishLineRequest;
 use App\Entity\Result;
+use App\Message\UpdateLeaderboardMessage;
 use App\Repository\RaceRepository;
 use App\Repository\RunnerRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -23,6 +25,7 @@ class FinishLineController extends AbstractController
         private readonly RunnerRepository $runnerRepository,
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
+        private MessageBusInterface $messageBus
     ) {
         $this->logger->info('FinishLineController created');
     }
@@ -64,6 +67,12 @@ class FinishLineController extends AbstractController
         $this->entityManager->flush();
 
         $this->logger->info('Finished finish line request', ['result' => $result]);
+
+        $this->messageBus->dispatch(new UpdateLeaderboardMessage(
+            $result->getRace()->getId(),
+            $result->getRunner()->getId(),
+            $result->getTime()
+        ));
 
         return new JsonResponse(['id' => $result->getId()], 201);
     }
