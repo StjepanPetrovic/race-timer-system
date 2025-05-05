@@ -5,6 +5,5 @@ metadata:
 data:
   APP_ENV: "prod"
   APP_DEBUG: "0"
-  CORS_ALLOW_ORIGIN: "^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$"
-    # Add any other non-sensitive environment variables your app needs
+  CORS_ALLOW_ORIGIN: "^https?://(localhost|127\\.0\\.0\\.1)(:[0-9]+)?$"
   MESSENGER_TRANSPORT_DSN: "doctrine://default?queue_name=async"
