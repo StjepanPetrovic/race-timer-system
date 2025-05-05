@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: symfony-messenger-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: symfony-messenger-worker
+  template:
+    metadata:
+      labels:
+        app: symfony-messenger-worker
+    spec:
+      containers:
+      - name: symfony-messenger-worker
+        image: your-registry/symfony-app:latest
+        command: ["php", "bin/console", "messenger:consume", "async", "--time-limit=3600"]
+        env:
+        - name: APP_ENV
+          value: prod
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: symfony-secrets
+              key: database-url
