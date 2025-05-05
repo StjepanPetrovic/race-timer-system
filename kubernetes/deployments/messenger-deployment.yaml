@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: symfony-messenger-worker
+  name: race-timer-api-worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: symfony-messenger-worker
+      app: race-timer-api-worker
   template:
     metadata:
       labels:
-        app: symfony-messenger-worker
+        app: race-timer-api-worker
     spec:
       containers:
-      - name: symfony-messenger-worker
-        image: your-registry/symfony-app:latest
+      - name: race-timer-api-worker
+        image: stjepan11/race-timer-api:latest
         command: ["php", "bin/console", "messenger:consume", "async", "--time-limit=3600"]
         env:
         - name: APP_ENV
@@ -24,3 +24,13 @@ spec:
             secretKeyRef:
               name: symfony-secrets
               key: database-url
+        - name: APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: symfony-secrets
+              key: app-secret
+        - name: MESSENGER_TRANSPORT_DSN
+          valueFrom:
+            configMapKeyRef:
+              name: symfony-config
+              key: MESSENGER_TRANSPORT_DSN
