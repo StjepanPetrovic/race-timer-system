@@ -15,7 +15,7 @@ func main() {
      fmt.Println("Racing Timer Client - Finish Line Simulator")
 
      // Configuration
-     raceID := 6 // Set your race ID
+     raceID := 1 // Set your race ID
 
      // Define start numbers for the race
      startNumbers := []int{101, 102, 103, 104, 105, 106, 107, 108, 109, 110}

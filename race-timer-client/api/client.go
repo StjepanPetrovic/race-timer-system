@@ -6,6 +6,7 @@ import (
     "fmt"
     "net/http"
     "time"
+    "io"
 )
 
 // Runner struct represents a runner in the racing application
@@ -16,7 +17,8 @@ type ResultRequest struct {
 }
 
 // Base URL of the Symfony API
-const baseURL = "https://127.0.0.1:8000/api"
+// const baseURL = "https://127.0.0.1:8000/api"
+const baseURL = "http://localhost:8080/api"
 
 // SendRunnerResult sends a runner's finish time to the API
 func SendRunnerResult(startNumber int, raceId int, finishTime time.Time) error {
@@ -47,7 +49,11 @@ func SendRunnerResult(startNumber int, raceId int, finishTime time.Time) error {
     defer resp.Body.Close()
 
     if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
-        return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+        body, err := io.ReadAll(resp.Body)
+        if err != nil {
+            return fmt.Errorf("status code: %d, error reading response body: %v", resp.StatusCode, err)
+        }
+        return fmt.Errorf("status code: %d, response body: %s", resp.StatusCode, string(body))
     }
 
     return nil
