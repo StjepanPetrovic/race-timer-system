@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messenger-worker
+  labels:
+    app: symfony
+    component: messenger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: symfony
+      component: messenger
+  template:
+    metadata:
+      labels:
+        app: symfony
+        component: messenger
+    spec:
+      containers:
+        - name: messenger-worker
+          image: your-php-image  # Replace with the same image as the PHP container
+          command: ["php", "bin/console", "messenger:consume", "async", "-vv"]
+          volumeMounts:
+            - name: app-volume
+              mountPath: /var/www/html
+      volumes:
+        - name: app-volume
+          hostPath:
+            path: /path/to/your/project

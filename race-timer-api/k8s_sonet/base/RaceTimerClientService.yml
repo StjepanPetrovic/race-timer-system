@@ -1,0 +1,13 @@
+# k8s/client-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: race-timer-client
+  namespace: race-timer
+spec:
+  selector:
+    app: race-timer-client
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP

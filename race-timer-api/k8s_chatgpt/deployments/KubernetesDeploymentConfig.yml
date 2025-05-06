@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php
+  labels:
+    app: symfony
+    component: php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: symfony
+      component: php
+  template:
+    metadata:
+      labels:
+        app: symfony
+        component: php
+    spec:
+      containers:
+        - name: php
+          image: your-php-image  # Replace with your PHP Docker image
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: app-volume
+              mountPath: /var/www/html
+      volumes:
+        - name: app-volume
+          hostPath:
+            path: /path/to/your/project  # Update this to the absolute path of your project
