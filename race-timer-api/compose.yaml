@@ -5,10 +5,13 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     container_name: symfony_php
+    environment:
+      LOAD_FIXTURES: "true"  # Set to "false" when you don't want to load fixtures
     volumes:
       - ./:/var/www/html
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     networks:
       - symfony
 
@@ -38,6 +41,12 @@ services:
       - database-data:/var/lib/postgresql/data
     networks:
       - symfony
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U stjepan -d race-timer" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 
 
   messenger_worker:

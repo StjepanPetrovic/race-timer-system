@@ -8,3 +8,10 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+# Add the entrypoint script
+COPY docker/php/database_script.sh /usr/local/bin/database_script
+RUN chmod +x /usr/local/bin/database_script
+
+ENTRYPOINT ["database_script"]
+CMD ["php-fpm"]
